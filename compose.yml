@@ -22,6 +22,7 @@ services:
       labels:
         # TODO: Currently / takes you to grav. Make that optional for any service?
         - traefik.frontend.rule=HostRegexp:grav.{domain:.+},{domain:.+}
+        - traefik.frontend.priority=1
         - traefik.enable=true
         - traefik.port=80
         - traefik.tags=ingress
