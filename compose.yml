@@ -9,7 +9,7 @@ services:
       - grav
       
   grav:
-    image: dsavell/grav:admin-1.6.11
+    image: ${image_provider:-scififarms}/technocore-grav:${TAG:-latest}
     deploy:
       mode: global
       restart_policy:
