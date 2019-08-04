@@ -20,11 +20,10 @@ services:
         reservations:
           memory: 64M
       labels:
-        # TODO: Currently / takes you to grav. Make that optional for any service?
-        - traefik.frontend.rule=HostRegexp:grav.{domain:.+},{domain:.+}
-        - traefik.frontend.priority=1
-        - traefik.enable=true
+        - traefik.frontend.rule=$GRAV_ROUTING_LABEL
+        - traefik.frontend.priority=$GRAV_ROUTING_LABEL_PRIORITY
         - traefik.port=80
+        - traefik.enable=true
         - traefik.tags=ingress
         - traefik.docker.network=${STACK_NAME:-technocore}_grav
         # Traefik service that listens to HTTP
