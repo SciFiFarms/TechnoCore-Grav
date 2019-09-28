@@ -20,6 +20,7 @@ services:
         reservations:
           memory: 64M
       labels:
+        - com.ouroboros.enable=true
         - traefik.frontend.rule=$GRAV_ROUTING_LABEL
         - traefik.frontend.priority=$GRAV_ROUTING_LABEL_PRIORITY
         - traefik.port=80
