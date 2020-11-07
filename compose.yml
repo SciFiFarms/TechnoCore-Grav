@@ -32,6 +32,12 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
+    environment:
+      # Sometimes you have to pass in ${DOMAIN} to enable the correct link paths to be generated.
+      # Othertimes you can use http:// or https:// for the website. Weird trick.
+      #- MQTT_USER=${EXAMPLE_SERVICE}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD={{"{{DOCKER-SECRET:admin_password}}"}}
     logging:
       driver: "${LOGGING_DRIVER}"
       options:
@@ -42,6 +48,7 @@ services:
       - grav-backup:/var/www/grav/backup 
       - grav-logs:/var/www/grav/logs 
       - grav-user:/var/www/grav/user 
+      
 volumes: 
   grav-backup:
   grav-logs:
