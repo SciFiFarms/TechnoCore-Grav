@@ -3,6 +3,14 @@ version: "3.5"
 networks:
   grav:
 
+secrets:
+  grav_admin_password:
+    name: ${STACK_NAME:-technocore}_grav_admin_password
+    external: true
+  grav_git_token:
+    name: ${STACK_NAME:-technocore}_grav_git_token
+    external: true
+
 services:
   ingress:
     networks:
@@ -15,8 +23,8 @@ services:
       restart_policy:
         condition: any
       resources:
-        limits:
-          memory: 128M
+        #limits:
+        #  memory: 128M
         reservations:
           memory: 64M
       labels:
@@ -32,22 +40,31 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
+        # TODO: This needs to be incorporated into Grav's config somehow.
+        - user-provided-secret-git_token=grav git_token
     environment:
       # Sometimes you have to pass in ${DOMAIN} to enable the correct link paths to be generated.
       # Othertimes you can use http:// or https:// for the website. Weird trick.
       #- MQTT_USER=${EXAMPLE_SERVICE}
       - ADMIN_USER=${ADMIN_USER}
       - ADMIN_PASSWORD={{"{{DOCKER-SECRET:admin_password}}"}}
+      - ADMIN_EMAIL=grav@${DOMAIN}
     logging:
       driver: "${LOGGING_DRIVER}"
       options:
         tag: "{{.Name}}"
     networks:
       - grav
+    secrets:
+      - source: grav_admin_password
+        target: admin_password
+      - source: grav_git_token
+        target: git_token
     volumes:
       - grav-backup:/var/www/grav/backup 
       - grav-logs:/var/www/grav/logs 
       - grav-user:/var/www/grav/user 
+      - ${DEV_MOUNT_GRAV_MIGRATIONS:-$EMPTY_MOUNT}
       
 volumes: 
   grav-backup:

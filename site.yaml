@@ -1,0 +1,6 @@
+title: Grav
+author:
+  name: TechnoCore
+  email: !env EMAIL_ADDRESS
+metadata:
+    description: 'Grav is an easy to use, yet powerful, open source flat-file CMS'
