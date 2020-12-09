@@ -1,4 +1,4 @@
-FROM dsavell/grav:admin-1.6.28
+FROM dsavell/grav:admin-1.6.29
 
 RUN apt-get update && apt-get -y install git sqlite3  php7.3-pdo php7.3-sqlite3 php7.3-mysql
 RUN echo "upload_max_filesize = 200M" >> /etc/php/7.3/cli/conf.d/25-increase-upload-size.ini
