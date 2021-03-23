@@ -1,13 +1,12 @@
-FROM dsavell/grav:admin-1.6.29
+FROM dsavell/grav:admin-1.6.31
 
-RUN apt-get update && apt-get -y install git sqlite3  php7.3-pdo php7.3-sqlite3 php7.3-mysql
-RUN echo "upload_max_filesize = 200M" >> /etc/php/7.3/cli/conf.d/25-increase-upload-size.ini
-RUN echo "upload_max_filesize = 200M" >> /etc/php/7.3/fpm/conf.d/25-increase-upload-size.ini
+RUN wget https://packages.sury.org/php/apt.gpg -O /etc/apt/trusted.gpg.d/php-sury.gpg && chmod 1777 /tmp && apt-get update && apt-get -y install git sqlite3  php7.3-pdo php7.3-sqlite3 php7.3-mysql
+RUN echo "upload_max_filesize = 200M" >> /etc/php/7.4/cli/conf.d/25-increase-upload-size.ini
+RUN echo "upload_max_filesize = 200M" >> /etc/php/7.4/fpm/conf.d/25-increase-upload-size.ini
 
 COPY site.yaml /var/www/grav/user/config/site.yaml
 COPY page-toc.yaml /var/www/grav/user/config/plugins/
-RUN mkdir /var/www/grav/user/pages && \
-    chown -R xyz:xyz /var/www/grav/cache
+RUN mkdir /var/www/grav/user/pages
 
 # Add dogfish
 ARG PERSISTANT_DIR=/var/www/grav/user
