@@ -6,16 +6,17 @@ RUN echo "upload_max_filesize = 200M" >> /etc/php/7.3/fpm/conf.d/25-increase-upl
 
 COPY site.yaml /var/www/grav/user/config/site.yaml
 COPY page-toc.yaml /var/www/grav/user/config/plugins/
-RUN mkdir /var/www/grav/user/pages
+RUN mkdir /var/www/grav/user/pages && \
+    chown -R xyz:xyz /var/www/grav/cache
 
 # Add dogfish
 ARG PERSISTANT_DIR=/var/www/grav/user
 COPY dogfish/ /usr/share/dogfish
 COPY migrations/ /usr/share/dogfish/shell-migrations
 RUN ln -s /usr/share/dogfish/dogfish /usr/bin/dogfish
-RUN mkdir /var/lib/dogfish 
-# Need to do this all together because ultimately, the config folder is a volume, and anything done in there will be lost. 
-RUN mkdir -p ${PERSISTANT_DIR} && touch ${PERSISTANT_DIR}/migrations.log && ln -s ${PERSISTANT_DIR}/migrations.log /var/lib/dogfish/migrations.log 
+RUN mkdir /var/lib/dogfish
+# Need to do this all together because ultimately, the config folder is a volume, and anything done in there will be lost.
+RUN mkdir -p ${PERSISTANT_DIR} && touch ${PERSISTANT_DIR}/migrations.log && ln -s ${PERSISTANT_DIR}/migrations.log /var/lib/dogfish/migrations.log
 
 ## Set up the CMD as well as the pre and post hooks.
 COPY go-init /bin/go-init

@@ -63,7 +63,7 @@ services:
     volumes:
       - grav-backup:/var/www/grav/backup 
       - grav-logs:/var/www/grav/logs 
-      - grav-user:/var/www/grav/user 
+      - ${TECHNOCORE_DATA}/grav-user:/var/www/grav/user
       - ${DEV_MOUNT_GRAV_MIGRATIONS:-$EMPTY_MOUNT}
       
 volumes: 
