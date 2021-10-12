@@ -15,7 +15,7 @@ services:
   ingress:
     networks:
       - grav
-      
+
   grav:
     image: ${image_provider:-scififarms}/technocore-grav:${TAG:-latest}
     deploy:
@@ -61,12 +61,12 @@ services:
       - source: grav_git_token
         target: git_token
     volumes:
-      - grav-backup:/var/www/grav/backup 
-      - grav-logs:/var/www/grav/logs 
-      - ${TECHNOCORE_DATA}/grav-user:/var/www/grav/user
+      - ${TECHNOCORE_DATA}/grav-backup:/var/www/grav/backup
+      - ${TECHNOCORE_DATA}/grav-logs:/var/www/grav/logs
+      - ${TECHNOCORE_DATA}/grav-user:/config
       - ${DEV_MOUNT_GRAV_MIGRATIONS:-$EMPTY_MOUNT}
-      
-volumes: 
+
+volumes:
   grav-backup:
   grav-logs:
   grav-user:
