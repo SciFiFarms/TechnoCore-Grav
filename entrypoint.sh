@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Most of this file comes from https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc 
-# Thanks Basilio Vera, Rubén Norte, and Jose Manuel Cardona! 
+# Most of this file comes from https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc
+# Thanks Basilio Vera, Rubén Norte, and Jose Manuel Cardona!
 
 : ${ENV_SECRETS_DIR:=/run/secrets}
 
@@ -46,6 +46,6 @@ env_secrets_expand() {
 env_secrets_expand
 dogfish migrate &
 
-# Add any additional script here. 
+# Add any additional script here.
 
 exec "$@"

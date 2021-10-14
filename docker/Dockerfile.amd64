@@ -28,5 +28,7 @@ COPY go-init /bin/go-init
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 COPY exitpoint.sh /usr/bin/exitpoint.sh
 
+RUN rm -rf /app/grav-admin/user/pages/*
+
 ENTRYPOINT ["go-init"]
 CMD ["-main", "/usr/bin/entrypoint.sh /init", "-post", "/usr/bin/exitpoint.sh"]

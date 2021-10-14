@@ -49,6 +49,9 @@ services:
       - ADMIN_USER=${ADMIN_USER}
       - ADMIN_PASSWORD={{"{{DOCKER-SECRET:admin_password}}"}}
       - ADMIN_EMAIL=grav@${DOMAIN}
+      # TODO: This should probably be detected instead of hardcoded.
+      - PUID=1000
+      - PGID=1000
     logging:
       driver: "${LOGGING_DRIVER}"
       options:
