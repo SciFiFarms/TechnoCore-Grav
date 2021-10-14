@@ -1,10 +1,7 @@
 FROM linuxserver/grav:amd64-version-1.7.23
 
-#RUN wget https://packages.sury.org/php/apt.gpg -O /etc/apt/trusted.gpg.d/php-sury.gpg && \
-#    chmod 1777 /tmp && apt-get update && \
-#    apt-get -y install git sqlite3  php7.4-pdo php7.4-sqlite3 php7.4-mysql
-
-
+# These are needed to get tntsearch working.
+RUN apk add php-pdo_mysql sqlite php-sqlite3 php7-mysqli  php7-pdo_sqlite php7-pdo
 
 #RUN echo "upload_max_filesize = 200M" >> /etc/php/7.4/cli/conf.d/25-increase-upload-size.ini
 #RUN echo "upload_max_filesize = 200M" >> /etc/php/7.4/fpm/conf.d/25-increase-upload-size.ini
@@ -12,7 +9,7 @@ FROM linuxserver/grav:amd64-version-1.7.23
 COPY site.yaml /var/www/grav/user/config/site.yaml
 COPY page-toc.yaml /var/www/grav/user/config/plugins/
 RUN mkdir /var/www/grav/user/pages
-RUN cd /app/grav-admin/ && bin/gpm install -y learn2-git-sync quark page-toc
+RUN cd /app/grav-admin/ && bin/gpm install -y learn2-git-sync quark page-toc tntsearch
 
 # Add dogfish
 ARG PERSISTANT_DIR=/config
